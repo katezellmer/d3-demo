@@ -43,15 +43,7 @@ var w = 900, h = 500;
     }
 	];
 
-	var color = d3.scaleLinear()
-        .range([
-            "#FDBE85",
-            "#D94701"
-        ])
-        .domain([
-            minPop, 
-            maxPop
-        ]);
+	
 
 	//above Example 2.8 line 20
     //find the minimum value of the array
@@ -64,15 +56,25 @@ var w = 900, h = 500;
         return d.population;
     });
 
+    var color = d3.scaleLinear()
+        .range([
+            "#FDBE85",
+            "#D94701"
+        ])
+        .domain([
+            minPop, 
+            maxPop
+        ]);
+
     //scale for circles center y coordinate
     var y = d3.scaleLinear()
         .range([450, 50]) //was 440, 95
-        .domain([0, 700000]); //was minPop, maxPop
+        .domain([0, 800000]); //was minPop, maxPop
 
 	//above Example 2.8 line 20
     var x = d3.scaleLinear() //create the scale
         .range([90, 810]) //output min and max
-        .domain([0, 3]); //input min and max
+        .domain([0, 4]); //input min and max
 
     var circles = container.selectAll(".circles") //but wait--there are no circles yet!
         .data(cityPop) //here we feed in an array
@@ -95,7 +97,9 @@ var w = 900, h = 500;
             //subtract value from 450 to "grow" circles up from the bottom instead of down from the top of the SVG
             return y(d.population);
         })
-        .style("fill", function(d, i){ //add a fill based on the color scale generator
+        .style("fill", function(d, i){
+        	console.log(color(d.population));
+        	console.log(d.population); //add a fill based on the color scale generator
             return color(d.population);
         })
         .style("stroke", "#000");
